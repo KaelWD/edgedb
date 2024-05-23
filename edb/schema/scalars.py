@@ -45,10 +45,10 @@ from .generated import scalars as sg_scalars
 
 
 class ScalarType(
+    sg_scalars.ScalarTypeMixin,
     s_types.InheritingType,
     constraints.ConsistencySubject,
     s_abc.ScalarType,
-    sg_scalars.ScalarTypeMixin,
     qlkind=qltypes.SchemaObjectClass.SCALAR_TYPE,
     data_safe=True,
 ):

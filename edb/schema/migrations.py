@@ -43,9 +43,9 @@ if TYPE_CHECKING:
 
 
 class Migration(
+    sg_migrations.MigrationMixin,
     so.Object,
     s_abc.Migration,
-    sg_migrations.MigrationMixin,
     qlkind=qltypes.SchemaObjectClass.MIGRATION,
     data_safe=False,
 ):

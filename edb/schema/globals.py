@@ -43,9 +43,9 @@ if TYPE_CHECKING:
 
 
 class Global(
+    sg_globals.GlobalMixin,
     so.QualifiedObject,
     s_anno.AnnotationSubject,
-    sg_globals.GlobalMixin,
     qlkind=qltypes.SchemaObjectClass.GLOBAL,
     data_safe=True,
 ):

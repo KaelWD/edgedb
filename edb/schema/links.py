@@ -106,10 +106,10 @@ def merge_actions(
 
 
 class Link(
+    sg_links.LinkMixin,
     sources.Source,
     pointers.Pointer,
     s_abc.Link,
-    sg_links.LinkMixin,
     qlkind=qltypes.SchemaObjectClass.LINK,
     data_safe=False,
 ):

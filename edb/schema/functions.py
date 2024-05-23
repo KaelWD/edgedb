@@ -341,9 +341,9 @@ def make_func_param(
 
 
 class Parameter(
+    sg_functions.ParameterMixin,
     so.ObjectFragment,
     so.Object,  # Help reflection figure out the right db MRO
-    sg_functions.ParameterMixin,
     s_abc.Parameter,
     qlkind=ft.SchemaObjectClass.PARAMETER,
     data_safe=True,
@@ -773,9 +773,9 @@ CallableObjectT = TypeVar('CallableObjectT', bound='CallableObject')
 
 
 class CallableObject(
+    sg_functions.CallableObjectMixin,
     so.QualifiedObject,
     s_anno.AnnotationSubject,
-    sg_functions.CallableObjectMixin,
     CallableLike,
 ):
 
@@ -1208,10 +1208,10 @@ class DeleteCallableObject(
 
 
 class Function(
+    sg_functions.FunctionMixin,
     CallableObject,
     VolatilitySubject,
     s_abc.Function,
-    sg_functions.FunctionMixin,
     qlkind=ft.SchemaObjectClass.FUNCTION,
     data_safe=True,
 ):

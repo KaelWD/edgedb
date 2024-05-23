@@ -43,9 +43,9 @@ from .generated import extensions as sg_extensions
 
 
 class ExtensionPackage(
+    sg_extensions.ExtensionPackageMixin,
     so.GlobalObject,
     s_anno.AnnotationSubject,
-    sg_extensions.ExtensionPackageMixin,
     qlkind=qltypes.SchemaObjectClass.EXTENSION_PACKAGE,
     data_safe=False,
 ):
@@ -104,8 +104,8 @@ class ExtensionPackage(
 
 
 class Extension(
-    so.Object,
     sg_extensions.ExtensionMixin,
+    so.Object,
     qlkind=qltypes.SchemaObjectClass.EXTENSION,
     data_safe=False,
 ):

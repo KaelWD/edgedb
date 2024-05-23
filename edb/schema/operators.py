@@ -39,10 +39,10 @@ if TYPE_CHECKING:
 
 
 class Operator(
+    sg_operators.OperatorMixin,
     s_func.CallableObject,
     s_func.VolatilitySubject,
     s_abc.Operator,
-    sg_operators.OperatorMixin,
     qlkind=ft.SchemaObjectClass.OPERATOR,
     data_safe=True,
 ):

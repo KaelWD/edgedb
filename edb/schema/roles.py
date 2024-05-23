@@ -39,10 +39,10 @@ if TYPE_CHECKING:
 
 
 class Role(
+    sg_roles.RoleMixin,
     so.GlobalObject,
     so.InheritingObject,
     s_anno.AnnotationSubject,
-    sg_roles.RoleMixin,
     qlkind=qltypes.SchemaObjectClass.ROLE,
     data_safe=True,
 ):

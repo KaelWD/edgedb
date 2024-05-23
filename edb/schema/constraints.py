@@ -367,10 +367,10 @@ class Constraint(
 
 
 class ConsistencySubject(
+    sg_constraints.ConsistencySubjectMixin,
     so.QualifiedObject,
     so.InheritingObject,
     s_anno.AnnotationSubject,
-    sg_constraints.ConsistencySubjectMixin,
 ):
     constraints_refs = so.RefDict(
         attr='constraints',

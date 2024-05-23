@@ -424,9 +424,9 @@ Pointer_T = TypeVar("Pointer_T", bound="Pointer")
 
 
 class Pointer(
+    sg_pointers.PointerMixin,
     referencing.NamedReferencedInheritingObject,
     constraints.ConsistencySubject,
-    sg_pointers.PointerMixin,
     s_anno.AnnotationSubject,
     s_abc.Pointer
 ):

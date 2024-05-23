@@ -38,10 +38,10 @@ from typing import cast
 
 
 class Database(
+    sg_database.DatabaseMixin,
     so.ExternalObject,
     s_anno.AnnotationSubject,
     s_abc.Database,
-    sg_database.DatabaseMixin,
     qlkind=qltypes.SchemaObjectClass.DATABASE,
     data_safe=False,
 ):

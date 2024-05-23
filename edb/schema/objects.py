@@ -913,7 +913,7 @@ class FieldValueNotFoundError(Exception):
 
 
 class Object(
-    s_abc.Object, ObjectContainer, sg_obj.ObjectMixin, metaclass=ObjectMeta
+    sg_obj.ObjectMixin, s_abc.Object, ObjectContainer, metaclass=ObjectMeta
 ):
     """Base schema item class."""
 
@@ -1998,7 +1998,7 @@ class Object(
         return f'<{type(self).__name__} {self.id} at 0x{id(self):#x}>'
 
 
-class InternalObject(Object, sg_obj.InternalObjectMixin):
+class InternalObject(sg_obj.InternalObjectMixin, Object):
     """A schema object that is used by the system internally.
 
     Instances of InternalObject should not appear in schema dumps.
@@ -2011,7 +2011,7 @@ class InternalObject(Object, sg_obj.InternalObjectMixin):
         return cls is InternalObject
 
 
-class QualifiedObject(Object, sg_obj.ObjectMixin):
+class QualifiedObject(sg_obj.QualifiedObjectMixin, Object):
 
     name = SchemaField(
         # ignore below because Mypy doesn't understand fields which are not
@@ -2036,18 +2036,18 @@ class QualifiedObject(Object, sg_obj.ObjectMixin):
 QualifiedObject_T = TypeVar('QualifiedObject_T', bound='QualifiedObject')
 
 
-class ObjectFragment(QualifiedObject, sg_obj.ObjectFragmentMixin):
+class ObjectFragment(sg_obj.ObjectFragmentMixin, QualifiedObject):
     """A part of another object that cannot exist independently."""
 
 
-class GlobalObject(Object, sg_obj.GlobalObjectMixin):
+class GlobalObject(sg_obj.GlobalObjectMixin, Object):
     is_global_object = True
 
 
 GlobalObject_T = TypeVar('GlobalObject_T', bound='GlobalObject')
 
 
-class ExternalObject(GlobalObject, sg_obj.ExternalObjectMixin):
+class ExternalObject(sg_obj.ExternalObjectMixin, GlobalObject):
     """An object that is not tracked in a schema, but some external state."""
     pass
 
@@ -2055,7 +2055,7 @@ class ExternalObject(GlobalObject, sg_obj.ExternalObjectMixin):
 ExternalObject_T = TypeVar('ExternalObject_T', bound='ExternalObject')
 
 
-class DerivableObject(QualifiedObject, sg_obj.DerivableObjectMixin):
+class DerivableObject(sg_obj.DerivableObjectMixin, QualifiedObject):
 
     def derive_name(
         self,
@@ -2934,7 +2934,7 @@ class ObjectList(
         return super().create(schema, data, **kwargs)  # type: ignore
 
 
-class SubclassableObject(Object, sg_obj.SubclassableObjectMixin):
+class SubclassableObject(sg_obj.SubclassableObjectMixin, Object):
 
     abstract = SchemaField(
         bool,
@@ -2973,7 +2973,7 @@ class SubclassableObject(Object, sg_obj.SubclassableObjectMixin):
 InheritingObjectT = TypeVar('InheritingObjectT', bound='InheritingObject')
 
 
-class InheritingObject(SubclassableObject, sg_obj.InheritingObjectMixin):
+class InheritingObject(sg_obj.InheritingObjectMixin, SubclassableObject):
 
     bases = SchemaField(
         ObjectList['InheritingObject'],
@@ -3336,7 +3336,7 @@ DerivableInheritingObjectT = TypeVar(
 
 
 class DerivableInheritingObject(
-    DerivableObject, InheritingObject, sg_obj.DerivableInheritingObjectMixin
+    sg_obj.DerivableInheritingObjectMixin, DerivableObject, InheritingObject
 ):
 
     def get_nearest_non_derived_parent(

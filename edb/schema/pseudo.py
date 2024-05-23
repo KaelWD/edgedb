@@ -39,9 +39,9 @@ PseudoType_T = TypeVar("PseudoType_T", bound="PseudoType")
 
 
 class PseudoType(
+    sg_pseudo.PseudoTypeMixin,
     so.InheritingObject,
     s_types.Type,
-    sg_pseudo.PseudoTypeMixin,
     qlkind=qltypes.SchemaObjectClass.PSEUDO_TYPE,
 ):
 

@@ -58,7 +58,7 @@ ReferencedInheritingObjectT = TypeVar('ReferencedInheritingObjectT',
 # Q: There are no ReferencedObjects that aren't ReferencedInheritingObject;
 # should we merge them?
 class ReferencedObject(
-    so.DerivableObject, sg_referencing.ReferencedObjectMixin
+    sg_referencing.ReferencedObjectMixin, so.DerivableObject
 ):
 
     #: True if the object has an explicit definition and is not
@@ -180,9 +180,9 @@ class ReferencedObject(
 
 
 class ReferencedInheritingObject(
+    sg_referencing.ReferencedInheritingObjectMixin,
     so.DerivableInheritingObject,
     ReferencedObject,
-    sg_referencing.ReferencedInheritingObjectMixin,
 ):
 
     # Indicates that the object has been declared as

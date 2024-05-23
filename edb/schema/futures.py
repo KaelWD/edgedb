@@ -33,8 +33,8 @@ from .generated import futures as sg_futures
 
 
 class FutureBehavior(
-    so.Object,
     sg_futures.FutureBehaviorMixin,
+    so.Object,
     qlkind=qltypes.SchemaObjectClass.FUTURE,
     data_safe=False,
 ):

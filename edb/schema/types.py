@@ -84,10 +84,10 @@ CollectionExprAliasT = typing.TypeVar(
 
 
 class Type(
+    sg_types.TypeMixin,
     so.SubclassableObject,
     s_anno.AnnotationSubject,
     s_abc.Type,
-    sg_types.TypeMixin,
 ):
     """A schema item that is a valid *type*."""
 
@@ -536,14 +536,14 @@ class Type(
         return None
 
 
-class QualifiedType(so.QualifiedObject, Type, sg_types.QualifiedTypeMixin):
+class QualifiedType(sg_types.QualifiedTypeMixin, so.QualifiedObject, Type):
     @classmethod
     def get_schema_class_displayname(cls) -> str:
         return 'type'
 
 
 class InheritingType(
-    so.DerivableInheritingObject, QualifiedType, sg_types.InheritingTypeMixin,
+    sg_types.InheritingTypeMixin, so.DerivableInheritingObject, QualifiedType,
 ):
 
     def material_type(
@@ -949,7 +949,7 @@ class IntersectionTypeShell(TypeExprShell[TypeT_co]):
 _collection_impls: Dict[str, typing.Type[Collection]] = {}
 
 
-class Collection(Type, s_abc.Collection, sg_types.CollectionMixin):
+class Collection(sg_types.CollectionMixin, Type, s_abc.Collection):
 
     _schema_name: typing.ClassVar[typing.Optional[str]] = None
 
@@ -1179,7 +1179,7 @@ class CollectionTypeShell(TypeShell[CollectionTypeT_co]):
 
 
 class CollectionExprAlias(
-    QualifiedType, Collection, sg_types.CollectionExprAliasMixin
+    sg_types.CollectionExprAliasMixin, QualifiedType, Collection
 ):
 
     @classmethod
@@ -1221,9 +1221,9 @@ class CollectionExprAlias(
 
 
 class Array(
+    sg_types.ArrayMixin,
     Collection,
     s_abc.Array,
-    sg_types.ArrayMixin,
     qlkind=qltypes.SchemaObjectClass.ARRAY_TYPE,
     schema_name='array',
 ):
@@ -1591,9 +1591,9 @@ class ArrayTypeShell(CollectionTypeShell[Array_T_co]):
 
 
 class ArrayExprAlias(
+    sg_types.ArrayExprAliasMixin,
     CollectionExprAlias,
     Array,
-    sg_types.ArrayExprAliasMixin,
     qlkind=qltypes.SchemaObjectClass.ALIAS,
 ):
     # N.B: Don't add any SchemaFields to this class, they won't be
@@ -1609,9 +1609,9 @@ Tuple_T_co = typing.TypeVar('Tuple_T_co', bound='Tuple', covariant=True)
 
 
 class Tuple(
+    sg_types.TupleMixin,
     Collection,
     s_abc.Tuple,
-    sg_types.TupleMixin,
     qlkind=qltypes.SchemaObjectClass.TUPLE_TYPE,
     schema_name='tuple',
 ):
@@ -2180,9 +2180,9 @@ Range_T_co = typing.TypeVar('Range_T_co', bound='Range', covariant=True)
 
 
 class Range(
+    sg_types.RangeMixin,
     Collection,
     s_abc.Range,
-    sg_types.RangeMixin,
     qlkind=qltypes.SchemaObjectClass.RANGE_TYPE,
     schema_name='range',
 ):
@@ -2545,9 +2545,9 @@ MultiRange_T_co = typing.TypeVar(
 
 
 class MultiRange(
+    sg_types.MultiRangeMixin,
     Collection,
     s_abc.MultiRange,
-    sg_types.MultiRangeMixin,
     qlkind=qltypes.SchemaObjectClass.MULTIRANGE_TYPE,
     schema_name='multirange',
 ):
@@ -2862,9 +2862,9 @@ class MultiRangeTypeShell(CollectionTypeShell[MultiRange_T_co]):
 
 
 class MultiRangeExprAlias(
+    sg_types.MultiRangeExprAliasMixin,
     CollectionExprAlias,
     MultiRange,
-    sg_types.MultiRangeExprAliasMixin,
     qlkind=qltypes.SchemaObjectClass.ALIAS,
 ):
     # N.B: Don't add any SchemaFields to this class, they won't be

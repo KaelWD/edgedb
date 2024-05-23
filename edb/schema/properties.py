@@ -46,9 +46,9 @@ if TYPE_CHECKING:
 
 
 class Property(
+    sg_properties.PropertyMixin,
     pointers.Pointer,
     s_abc.Property,
-    sg_properties.PropertyMixin,
     qlkind=qltypes.SchemaObjectClass.PROPERTY,
     data_safe=False,
 ):

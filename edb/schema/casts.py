@@ -207,11 +207,11 @@ def get_cast_fullname(
 
 
 class Cast(
+    sg_casts.CastMixin,
     so.QualifiedObject,
     s_anno.AnnotationSubject,
     s_func.VolatilitySubject,
     s_abc.Cast,
-    sg_casts.CastMixin,
     qlkind=qltypes.SchemaObjectClass.CAST,
     data_safe=True,
 ):

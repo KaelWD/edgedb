@@ -179,10 +179,10 @@ class AnnotationSubject(so.Object, sg_annos.AnnotationSubjectMixin):
 
 
 class Annotation(
+    sg_annos.AnnotationMixin,
     so.QualifiedObject,
     so.InheritingObject,
     AnnotationSubject,
-    sg_annos.AnnotationMixin,
     qlkind=qltypes.SchemaObjectClass.ANNOTATION,
     data_safe=True,
 ):

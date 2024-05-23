@@ -25,13 +25,13 @@ from . import objects as so
 from .generated import version as sg_version
 
 
-class BaseSchemaVersion(so.Object, sg_version.BaseSchemaVersionMixin):
+class BaseSchemaVersion(sg_version.BaseSchemaVersionMixin, so.Object):
 
     version = so.SchemaField(uuid.UUID)
 
 
 class SchemaVersion(
-    BaseSchemaVersion, so.InternalObject, sg_version.SchemaVersionMixin
+    sg_version.SchemaVersionMixin, BaseSchemaVersion, so.InternalObject, 
 ):
     pass
 
@@ -62,10 +62,10 @@ class AlterSchemaVersion(
 
 
 class GlobalSchemaVersion(
+    sg_version.GlobalSchemaVersionMixin,
     BaseSchemaVersion,
     so.InternalObject,
     so.GlobalObject,
-    sg_version.GlobalSchemaVersionMixin
 ):
     pass
 
