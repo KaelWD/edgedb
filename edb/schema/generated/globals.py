@@ -1,10 +1,11 @@
 # DO NOT EDIT. This file was generated with:
 #
-# $ gen-schema-mixins
+# $ edb gen-schema-mixins
 
 """Type definitions for generated methods on schema classes"""
 
-from typing import cast, TYPE_CHECKING
+from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from edb.schema import schema as s_schema
 from edb.schema import orm as s_orm
@@ -19,35 +20,41 @@ class GlobalMixin:
     def get_target(
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
-        val = s_orm.get_field_value(self, schema, 'target')
-        return cast(types.Type, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'target'
+        )
 
     def get_required(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
-        val = s_orm.get_field_value(self, schema, 'required')
-        return cast(bool, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'required'
+        )
 
     def get_cardinality(
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.SchemaCardinality':
-        val = s_orm.get_field_value(self, schema, 'cardinality')
-        return cast(qltypes.SchemaCardinality, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'cardinality'
+        )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
-        val = s_orm.get_field_value(self, schema, 'expr')
-        return cast(expr.Expression, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'expr'
+        )
 
     def get_default(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
-        val = s_orm.get_field_value(self, schema, 'default')
-        return cast(expr.Expression, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'default'
+        )
 
     def get_created_types(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectSet[types.Type]':
-        val = s_orm.get_field_value(self, schema, 'created_types')
-        return cast(objects.ObjectSet[types.Type], val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'created_types'
+        )

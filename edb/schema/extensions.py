@@ -41,6 +41,7 @@ from . import objects as so
 from . import schema as s_schema
 from .generated import extensions as sg_extensions
 
+
 class ExtensionPackage(
     so.GlobalObject,
     s_anno.AnnotationSubject,

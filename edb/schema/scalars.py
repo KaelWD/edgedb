@@ -43,6 +43,7 @@ from . import types as s_types
 from . import utils as s_utils
 from .generated import scalars as sg_scalars
 
+
 class ScalarType(
     s_types.InheritingType,
     constraints.ConsistencySubject,

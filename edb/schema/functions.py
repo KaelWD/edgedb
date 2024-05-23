@@ -63,7 +63,6 @@ from . import referencing
 from . import types as s_types
 from . import utils
 from .generated import functions as sg_functions
-from .generated import objects as sg_objects
 
 
 if TYPE_CHECKING:
@@ -469,6 +468,7 @@ class Parameter(
 
 
 ParameterLike = ParameterDesc | Parameter
+
 
 class CallableCommandContext(sd.ObjectCommandContext['CallableObject'],
                              s_anno.AnnotationSubjectCommandContext):

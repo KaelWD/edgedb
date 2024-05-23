@@ -32,7 +32,7 @@ def gen_for_module(mod_name: str, mod: types.ModuleType):
         my_fields = getattr(cls, fa)
 
         # if len(my_fields) == 0:
-            # continue
+        #     continue
 
         for field in my_fields.values():
             imports.update(collect_imports(field.type, mod.__name__))
@@ -48,11 +48,12 @@ def gen_for_module(mod_name: str, mod: types.ModuleType):
             '''\
             # DO NOT EDIT. This file was generated with:
             #
-            # $ gen-schema-mixins
+            # $ edb gen-schema-mixins
 
             """Type definitions for generated methods on schema classes"""
 
-            from typing import cast, TYPE_CHECKING
+            from typing import TYPE_CHECKING
+
             if TYPE_CHECKING:
                 from edb.schema import schema as s_schema
             from edb.schema import orm as s_orm
@@ -82,12 +83,12 @@ def gen_for_module(mod_name: str, mod: types.ModuleType):
                 f'    def get_{fn}(\n'
                 f'        self, schema: \'s_schema.Schema\'\n'
                 f'    ) -> \'{ty}\':\n'
-                f'        val = s_orm.get_field_value(self, schema, \'{fn}\')\n'
-                f'        return cast({ty}, val)\n'
+                f'        return s_orm.get_field_value(  # type: ignore\n'
+                f'            self, schema, \'{fn}\'\n'
+                f'        )\n'
             )
         if len(my_fields) == 0:
             f.write('    pass\n')
-
 
 
 def collect_imports(ty: type, current_module: str) -> typing.Set[str]:

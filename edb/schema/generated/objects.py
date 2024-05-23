@@ -1,10 +1,11 @@
 # DO NOT EDIT. This file was generated with:
 #
-# $ gen-schema-mixins
+# $ edb gen-schema-mixins
 
 """Type definitions for generated methods on schema classes"""
 
-from typing import cast, TYPE_CHECKING
+from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from edb.schema import schema as s_schema
 from edb.schema import orm as s_orm
@@ -20,71 +21,84 @@ class ObjectMixin:
     def get_id(
         self, schema: 's_schema.Schema'
     ) -> 'uuid.UUID':
-        val = s_orm.get_field_value(self, schema, 'id')
-        return cast(uuid.UUID, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'id'
+        )
 
     def get_internal(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
-        val = s_orm.get_field_value(self, schema, 'internal')
-        return cast(bool, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'internal'
+        )
 
     def get_sourcectx(
         self, schema: 's_schema.Schema'
     ) -> 'span.Span':
-        val = s_orm.get_field_value(self, schema, 'sourcectx')
-        return cast(span.Span, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'sourcectx'
+        )
 
     def get_name(
         self, schema: 's_schema.Schema'
     ) -> 'name.Name':
-        val = s_orm.get_field_value(self, schema, 'name')
-        return cast(name.Name, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'name'
+        )
 
     def get_builtin(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
-        val = s_orm.get_field_value(self, schema, 'builtin')
-        return cast(bool, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'builtin'
+        )
 
     def get_computed_fields(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedSet[str]':
-        val = s_orm.get_field_value(self, schema, 'computed_fields')
-        return cast(checked.FrozenCheckedSet[str], val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'computed_fields'
+        )
 
 
 class InternalObjectMixin:
     pass
+
 
 class QualifiedObjectMixin:
 
     def get_name(
         self, schema: 's_schema.Schema'
     ) -> 'name.QualName':
-        val = s_orm.get_field_value(self, schema, 'name')
-        return cast(name.QualName, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'name'
+        )
 
 
 class ObjectFragmentMixin:
     pass
 
+
 class GlobalObjectMixin:
     pass
+
 
 class ExternalObjectMixin:
     pass
 
+
 class DerivableObjectMixin:
     pass
+
 
 class SubclassableObjectMixin:
 
     def get_abstract(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
-        val = s_orm.get_field_value(self, schema, 'abstract')
-        return cast(bool, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'abstract'
+        )
 
 
 class InheritingObjectMixin:
@@ -92,26 +106,30 @@ class InheritingObjectMixin:
     def get_bases(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[objects.InheritingObject]':
-        val = s_orm.get_field_value(self, schema, 'bases')
-        return cast(objects.ObjectList[objects.InheritingObject], val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'bases'
+        )
 
     def get_ancestors(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[objects.InheritingObject]':
-        val = s_orm.get_field_value(self, schema, 'ancestors')
-        return cast(objects.ObjectList[objects.InheritingObject], val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'ancestors'
+        )
 
     def get_inherited_fields(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedSet[str]':
-        val = s_orm.get_field_value(self, schema, 'inherited_fields')
-        return cast(checked.FrozenCheckedSet[str], val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'inherited_fields'
+        )
 
     def get_is_derived(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
-        val = s_orm.get_field_value(self, schema, 'is_derived')
-        return cast(bool, val)
+        return s_orm.get_field_value(  # type: ignore
+            self, schema, 'is_derived'
+        )
 
 
 class DerivableInheritingObjectMixin:
