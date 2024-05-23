@@ -76,8 +76,11 @@ abstract link translated_label {
 
 abstract link link_with_unique_property {
     property unique_property -> str {
-        constraint exclusive;
+        # TODO: Move the constraint back here once linkprop constraints
+        # supported in conflict selects.
+        # constraint exclusive;
     }
+    constraint exclusive on (@unique_property);
 }
 
 abstract link link_with_unique_property_inherited
@@ -279,6 +282,7 @@ type PropertyContainer {
         constraint exclusive
     }
 }
+type PropertyContainerChild extending PropertyContainer;
 
 type Pair {
     required property x -> str;

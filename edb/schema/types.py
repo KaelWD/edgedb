@@ -701,6 +701,7 @@ class UnionTypeShell(TypeExprShell[TypeT_co]):
         cmd.set_attribute_value('name', self.name)
         cmd.set_attribute_value('components', tuple(self.components))
         cmd.set_attribute_value('is_opaque_union', self.opaque)
+        cmd.set_attribute_value('span', self.sourcectx)
         return cmd
 
     def __repr__(self) -> str:
@@ -888,12 +889,26 @@ class CreateUnionType(sd.CreateObject[InheritingType], CompoundTypeCommand):
                 for c in self.get_attribute_value('components')
             ]
 
-            new_schema, union_type, created = utils.ensure_union_type(
-                schema,
-                components,
-                opaque=self.get_attribute_value('is_opaque_union') or False,
-                module=self.classname.module,
-            )
+            try:
+                new_schema, union_type, created = utils.ensure_union_type(
+                    schema,
+                    components,
+                    opaque=self.get_attribute_value('is_opaque_union') or False,
+                    module=self.classname.module,
+                )
+            except errors.SchemaError as e:
+                union_name = (
+                    '(' + ' | '.join(sorted(
+                    c.get_displayname(schema)
+                    for c in components
+                    )) + ')'
+                )
+                e.args = (
+                    (f'cannot create union {union_name} {e.args[0]}',)
+                    + e.args[1:]
+                )
+                e.set_span(self.get_attribute_value('span'))
+                raise e
 
             if created:
                 delta = union_type.as_create_delta(
@@ -2909,6 +2924,16 @@ def ensure_schema_type_expr_type(
     return cmd
 
 
+def type_dummy_expr(
+    typ: Type,
+    schema: s_schema.Schema,
+) -> Optional[s_expr.Expression]:
+    if isinstance(typ, so.DerivableInheritingObject):
+        typ = typ.get_nearest_non_derived_parent(schema)
+    text = f'assert_exists(<{typ.get_displayname(schema)}>{{}})'
+    return s_expr.Expression(text=text)
+
+
 class TypeCommand(sd.ObjectCommand[TypeT]):
 
     @classmethod
@@ -2970,9 +2995,7 @@ class TypeCommand(sd.ObjectCommand[TypeT]):
         value: Any,
     ) -> Optional[s_expr.Expression]:
         if field.name == 'expr':
-            raise AssertionError(
-                f"{self} must define get_dummy_expr_field_value() "
-                f"for {field.name}")
+            return type_dummy_expr(self.scls, schema)
         else:
             raise NotImplementedError(f'unhandled field {field.name!r}')
 
@@ -3238,18 +3261,7 @@ class AlterTupleExprAlias(
     CollectionExprAliasCommand[TupleExprAlias],
     sd.AlterObject[TupleExprAlias],
 ):
-
-    def get_dummy_expr_field_value(
-        self,
-        schema: s_schema.Schema,
-        context: sd.CommandContext,
-        field: so.Field[Any],
-        value: Any,
-    ) -> Optional[s_expr.Expression]:
-        if field.name == 'expr':
-            return s_expr.Expression(text='()')
-        else:
-            raise AssertionError(f'unhandled field {field.name!r}')
+    pass
 
 
 class CreateArray(CreateCollectionType[Array]):
@@ -3284,18 +3296,7 @@ class AlterArrayExprAlias(
     CollectionExprAliasCommand[ArrayExprAlias],
     sd.AlterObject[ArrayExprAlias],
 ):
-
-    def get_dummy_expr_field_value(
-        self,
-        schema: s_schema.Schema,
-        context: sd.CommandContext,
-        field: so.Field[Any],
-        value: Any,
-    ) -> Optional[s_expr.Expression]:
-        if field.name == 'expr':
-            return s_expr.Expression(text='[]')
-        else:
-            raise AssertionError(f'unhandled field {field.name!r}')
+    pass
 
 
 class CreateRange(CreateCollectionType[Range]):
@@ -3330,18 +3331,7 @@ class AlterRangeExprAlias(
     CollectionExprAliasCommand[RangeExprAlias],
     sd.AlterObject[RangeExprAlias],
 ):
-
-    def get_dummy_expr_field_value(
-        self,
-        schema: s_schema.Schema,
-        context: sd.CommandContext,
-        field: so.Field[Any],
-        value: Any,
-    ) -> Optional[s_expr.Expression]:
-        if field.name == 'expr':
-            return s_expr.Expression(text='range()')
-        else:
-            raise AssertionError(f'unhandled field {field.name!r}')
+    pass
 
 
 class CreateMultiRange(CreateCollectionType[MultiRange]):
@@ -3376,18 +3366,7 @@ class AlterMultiRangeExprAlias(
     CollectionExprAliasCommand[MultiRangeExprAlias],
     sd.AlterObject[MultiRangeExprAlias],
 ):
-
-    def get_dummy_expr_field_value(
-        self,
-        schema: s_schema.Schema,
-        context: sd.CommandContext,
-        field: so.Field[Any],
-        value: Any,
-    ) -> Optional[s_expr.Expression]:
-        if field.name == 'expr':
-            return s_expr.Expression(text='multirange()')
-        else:
-            raise AssertionError(f'unhandled field {field.name!r}')
+    pass
 
 
 class DeleteTuple(DeleteCollectionType[Tuple]):

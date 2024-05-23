@@ -699,12 +699,7 @@ def _shape_el_ql_to_shape_el_desc(
         source_intersection = [steps[0]]
         lexpr = steps[1]
         ptype = steps[0].type
-        if not isinstance(ptype, qlast.TypeName):
-            raise errors.QueryError(
-                'complex type expressions are not supported here',
-                span=ptype.span,
-            )
-        source_spec = schemactx.get_schema_type(ptype.maintype, ctx=ctx)
+        source_spec = typegen.ql_typeexpr_to_type(ptype, ctx=ctx)
         if not isinstance(source_spec, s_objtypes.ObjectType):
             raise errors.QueryError(
                 f"expected object type, got "
@@ -1087,7 +1082,6 @@ def _compile_rewrites(
         return None
 
     return irast.Rewrites(
-        subject_path_id=anc.subject_set.path_id,
         old_path_id=anc.old_set.path_id if anc.old_set else None,
         by_type=by_type,
     )
@@ -1278,10 +1272,8 @@ def prepare_rewrite_anchors(
     schema = ctx.env.schema
 
     # init set for __subject__
-    # TODO: Do we really need a separate path id for __subject__?
-    subject_name = sn.QualName("__derived__", "__subject__")
     subject_path_id = irast.PathId.from_type(
-        schema, stype, typename=subject_name,
+        schema, stype,
         namespace=ctx.path_id_namespace, env=ctx.env,
     )
     subject_set = setgen.class_set(

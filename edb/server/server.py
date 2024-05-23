@@ -38,6 +38,7 @@ import itertools
 import json
 import logging
 import os
+import pathlib
 import pickle
 import socket
 import ssl
@@ -82,7 +83,6 @@ from .compiler import sertypes
 
 if TYPE_CHECKING:
     import asyncio.base_events
-    import pathlib
 
     from edb.pgsql import params as pgparams
 
@@ -371,13 +371,54 @@ class BaseServer:
     def monitor_fs(
         self,
         path: str | pathlib.Path,
-        cb: Callable[[str, int], None],
+        cb: Callable[[], None],
     ) -> Callable[[], None]:
         if not self._use_monitor_fs:
             return lambda: None
 
+        handle = None
+        parent_dir = pathlib.Path(path).parent
+
+        def watch_dir(file_modified, _event):
+            nonlocal handle
+            if parent_dir / os.fsdecode(file_modified) == pathlib.Path(path):
+                try:
+                    new_handle = self.__loop._monitor_fs(  # type: ignore
+                        str(path), callback)
+                except FileNotFoundError:
+                    pass
+                else:
+                    finalizer()
+                    handle = new_handle
+                    self._file_watch_handles.append(handle)
+
+        def callback(file_modified, event):
+            nonlocal handle
+            if event == 2:  # CHANGE
+                cb()
+            elif (
+                event == 1 and  # RENAME - macOS issues this event for CHANGE
+                parent_dir / os.fsdecode(file_modified) == pathlib.Path(path)
+            ):
+                cb()
+            elif event == 1 or event == 3:  # RENAME, RENAME_CHANGE
+                # File is likely renamed or deleted, stop watching
+                finalizer()
+                try:
+                    # Then, see if we can directly re-watch the target path
+                    handle = self.__loop._monitor_fs(  # type: ignore
+                        str(path), callback)
+                except FileNotFoundError:
+                    # If not, watch the parent directory to wait for recreation
+                    handle = self.__loop._monitor_fs(  # type: ignore
+                        str(parent_dir), watch_dir)
+                self._file_watch_handles.append(handle)
+            else:
+                # Unknown events are ignored
+                pass
+
         # ... we depend on an event loop internal _monitor_fs
-        handle = self.__loop._monitor_fs(str(path), cb)  # type: ignore
+        handle = self.__loop._monitor_fs(str(path), callback)  # type: ignore
 
         def finalizer():
             try:
@@ -903,7 +944,7 @@ class BaseServer:
         self._tls_cert_file = str(tls_cert_file)
         self._tls_cert_newly_generated = tls_cert_newly_generated
 
-        def reload_tls(_file_modified, _event, retry=0):
+        def reload_tls(retry=0):
             try:
                 self.reload_tls(tls_cert_file, tls_key_file, client_ca_file)
             except (StartupError, FileNotFoundError) as e:
@@ -917,8 +958,6 @@ class BaseServer:
                         self.__loop.call_later(
                             delay,
                             reload_tls,
-                            _file_modified,
-                            _event,
                             retry + 1,
                         )
                     )
@@ -935,6 +974,10 @@ class BaseServer:
             self.monitor_fs(tls_key_file, reload_tls)
         if client_ca_file is not None:
             self.monitor_fs(client_ca_file, reload_tls)
+
+    def start_watching_files(self):
+        # TODO(fantix): include the monitor_fs() lines above
+        pass
 
     def load_jwcrypto(self, jws_key_file: pathlib.Path) -> None:
         try:
@@ -1726,6 +1769,10 @@ class Server(BaseServer):
         rv = super()._get_compiler_args()
         rv.update(self._tenant.get_compiler_args())
         return rv
+
+    def start_watching_files(self):
+        super().start_watching_files()
+        self._tenant.start_watching_files()
 
 
 def _cleanup_wildcard_addrs(

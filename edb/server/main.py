@@ -280,6 +280,7 @@ async def _run_server(
         )
 
         ss.init_jwcrypto(args.jws_key_file, jws_keys_newly_generated)
+        ss.start_watching_files()
 
         def load_configuration(_signum):
             if args.reload_config_files not in [
@@ -866,7 +867,7 @@ def initialize_static_cfg(
         choices = setting.enum_values
         if setting.type is bool:
             choices = ['true', 'false']
-        env_value = env_value.lower()
+            env_value = env_value.lower()
         if choices is not None and env_value not in choices:
             raise server.StartupError(
                 f"Environment variable {env_name!r} can only be one of: " +

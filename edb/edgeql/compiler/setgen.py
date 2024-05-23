@@ -429,8 +429,11 @@ def compile_path(expr: qlast.Path, *, ctx: context.ContextLevel) -> irast.Set:
                 # anyway, so disallow them.
                 if (
                     ptr_expr.name in ('source', 'target')
-                    and ctx.env.options.schema_object_context
-                    not in (s_constr.Constraint, s_indexes.Index)
+                    and not ctx.allow_endpoint_linkprops
+                    and (
+                        ctx.env.options.schema_object_context
+                        not in (s_constr.Constraint, s_indexes.Index)
+                    )
                 ):
                     raise errors.QueryError(
                         f'@{ptr_expr.name} may only be used in index and '
@@ -529,13 +532,7 @@ def compile_path(expr: qlast.Path, *, ctx: context.ContextLevel) -> irast.Set:
                     f'it is not an object type',
                     span=step.span)
 
-            if not isinstance(step.type, qlast.TypeName):
-                raise errors.QueryError(
-                    f'complex type expressions are not supported here',
-                    span=step.span,
-                )
-
-            typ = schemactx.get_schema_type(step.type.maintype, ctx=ctx)
+            typ: s_types.Type = typegen.ql_typeexpr_to_type(step.type, ctx=ctx)
 
             try:
                 path_tip = type_intersection_set(
@@ -1218,9 +1215,14 @@ def tuple_indirection_set(
 
     assert isinstance(source, s_types.Tuple)
 
-    el_name = ptr_name
-    el_norm_name = source.normalize_index(ctx.env.schema, el_name)
-    el_type = source.get_subtype(ctx.env.schema, el_name)
+    try:
+        el_name = ptr_name
+        el_norm_name = source.normalize_index(ctx.env.schema, el_name)
+        el_type = source.get_subtype(ctx.env.schema, el_name)
+    except errors.InvalidReferenceError as e:
+        if span and not e.has_span():
+            e.set_span(span)
+        raise e
 
     path_id = pathctx.get_tuple_indirection_path_id(
         path_tip.path_id, el_norm_name, el_type, ctx=ctx)

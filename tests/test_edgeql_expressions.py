@@ -6796,8 +6796,8 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_upper"'
-            r' boolean property'
+            r"JSON object representing a range must include an 'inc_upper'"
+            r" boolean property"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('{
@@ -6810,8 +6810,8 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_lower"'
-            r' boolean property'
+            r"JSON object representing a range must include an 'inc_lower'"
+            r" boolean property"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('{
@@ -6823,8 +6823,7 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_lower"'
-            r' boolean property'
+            r"expected JSON object or null; got JSON array"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('["bad", null]');
@@ -6832,8 +6831,8 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_lower"'
-            r' boolean property'
+            r"JSON object representing a range must include an 'inc_lower'"
+            r" boolean property"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('{"bad": null}');
@@ -6841,8 +6840,7 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_lower"'
-            r' boolean property'
+            r"expected JSON object or null; got JSON string"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('"bad"');
@@ -6850,8 +6848,7 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_lower"'
-            r' boolean property'
+            r"expected JSON object or null; got JSON number"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('1312');
@@ -6859,8 +6856,7 @@ aa \
 
         async with self.assertRaisesRegexTx(
             edgedb.InvalidValueError,
-            r'JSON object representing a range must include an "inc_lower"'
-            r' boolean property'
+            r"expected JSON object or null; got JSON boolean"
         ):
             await self.con.execute(r"""
                 select <range<int64>>to_json('true');
@@ -9175,11 +9171,10 @@ aa \
             await self.con.query('SELECT <tuple<"">>1;')
 
     async def test_edgeql_typeop_01(self):
-        with self.assertRaisesRegex(
-                edgedb.UnsupportedFeatureError,
-                "type operator '&' is not implemented",
-        ):
-            await self.con.query('select <Named & Owned>{};')
+        await self.assert_query_result(
+            "select <Named & Owned>{};",
+            [],
+        )
 
     async def test_edgeql_typeop_02(self):
         with self.assertRaisesRegex(

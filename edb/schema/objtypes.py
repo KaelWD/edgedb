@@ -19,7 +19,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Optional, Tuple, Type, Iterable, List, Set, cast
+from typing import Optional, Tuple, Type, Iterable, List, Set, cast
 
 import collections
 
@@ -32,7 +32,6 @@ from . import abc as s_abc
 from . import annos as s_anno
 from . import constraints
 from . import delta as sd
-from . import expr as s_expr
 from . import inheriting
 from . import links
 from . import properties
@@ -166,7 +165,7 @@ class ObjectType(
                 comp_dns = sorted(
                     (c.get_displayname(schema)
                      for c in union_of.objects(schema)))
-                return ' | '.join(comp_dns)
+                return '(' + ' | '.join(comp_dns) + ')'
         else:
             intersection_of = mtype.get_intersection_of(schema)
             if intersection_of:
@@ -175,9 +174,9 @@ class ObjectType(
                      for c in intersection_of.objects(schema)))
                 # Elide BaseObject from display, because `& BaseObject`
                 # is a nop.
-                return ' & '.join(
+                return '(' + ' & '.join(
                     dn for dn in comp_dns if dn != 'std::BaseObject'
-                )
+                ) + ')'
             elif mtype == self:
                 return super().get_displayname(schema)
             else:
@@ -279,8 +278,10 @@ class ObjectType(
         if self == parent:
             return True
 
-        my_union = self.get_union_of(schema)
-        if my_union and not self.get_is_opaque_union(schema):
+        if (
+            (my_union := self.get_union_of(schema))
+            and not self.get_is_opaque_union(schema)
+        ):
             # A union is considered a subclass of a type, if
             # ALL its components are subclasses of that type.
             return all(
@@ -288,8 +289,7 @@ class ObjectType(
                 for t in my_union.objects(schema)
             )
 
-        my_intersection = self.get_intersection_of(schema)
-        if my_intersection:
+        if my_intersection := self.get_intersection_of(schema):
             # An intersection is considered a subclass of a type, if
             # ANY of its components are subclasses of that type.
             return any(
@@ -302,8 +302,10 @@ class ObjectType(
             return True
 
         elif isinstance(parent, ObjectType):
-            parent_union = parent.get_union_of(schema)
-            if parent_union:
+            if (
+                (parent_union := parent.get_union_of(schema))
+                and not parent.get_is_opaque_union(schema)
+            ):
                 # A type is considered a subclass of a union type,
                 # if it is a subclass of ANY of the union components.
                 return (
@@ -314,8 +316,7 @@ class ObjectType(
                     )
                 )
 
-            parent_intersection = parent.get_intersection_of(schema)
-            if parent_intersection:
+            if parent_intersection := parent.get_intersection_of(schema):
                 # A type is considered a subclass of an intersection type,
                 # if it is a subclass of ALL of the intersection components.
                 return all(
@@ -514,18 +515,6 @@ class ObjectTypeCommand(
                         f"cannot extend system type '{name}'",
                         span=self.span,
                     )
-
-    def get_dummy_expr_field_value(
-        self,
-        schema: s_schema.Schema,
-        context: sd.CommandContext,
-        field: so.Field[Any],
-        value: Any,
-    ) -> Optional[s_expr.Expression]:
-        if field.name == 'expr':
-            return s_expr.Expression(text=f'SELECT std::Object LIMIT 1')
-        else:
-            raise NotImplementedError(f'unhandled field {field.name!r}')
 
 
 class CreateObjectType(

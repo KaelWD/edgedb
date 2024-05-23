@@ -151,15 +151,16 @@ class TypeRef(ImmutableBase):
     # A set of type ancestor descriptors, if necessary for
     # this type description.
     ancestors: typing.Optional[typing.FrozenSet[TypeRef]] = None
-    # If this is a union type, this would be a set of
-    # union elements.
+    # If this is a compound type, this is a non-overlapping set of
+    # constituent types.
     union: typing.Optional[typing.FrozenSet[TypeRef]] = None
     # Whether the union is specified by an exhaustive list of
     # types, and type inheritance should not be considered.
     union_is_exhaustive: bool = False
-    # If this is an intersection type, this would be a set of
-    # intersection elements.
-    intersection: typing.Optional[typing.FrozenSet[TypeRef]] = None
+    # If this is a complex type, record the expression used to generate the
+    # type. This is used later to get the correct rvar in `get_path_var`.
+    expr_intersection: typing.Optional[typing.FrozenSet[TypeRef]] = None
+    expr_union: typing.Optional[typing.FrozenSet[TypeRef]] = None
     # If this node is an element of a collection, and the
     # collection elements are named, this would be then
     # name of the element.
@@ -1073,6 +1074,7 @@ class TypeCast(ImmutableExpr):
     sql_function: typing.Optional[str] = None
     sql_cast: bool
     sql_expr: bool
+    error_message_context: typing.Optional[str] = None
 
     @property
     def typeref(self) -> TypeRef:
@@ -1277,10 +1279,8 @@ class InsertStmt(MutatingStmt):
 RewritesOfType = typing.Dict[str, typing.Tuple[SetE[Pointer], BasePointerRef]]
 
 
-@dataclasses.dataclass(kw_only=True, frozen=True)
+@dataclasses.dataclass(kw_only=True, frozen=True, slots=True)
 class Rewrites:
-    subject_path_id: PathId
-
     old_path_id: typing.Optional[PathId]
 
     by_type: typing.Dict[TypeRef, RewritesOfType]

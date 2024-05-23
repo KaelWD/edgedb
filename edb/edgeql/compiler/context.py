@@ -35,6 +35,7 @@ from typing import (
     List,
     Set,
     FrozenSet,
+    NamedTuple,
     cast,
     overload,
     TYPE_CHECKING,
@@ -556,6 +557,9 @@ class ContextLevel(compiler.ContextLevel):
     active_computeds: ordered.OrderedSet[s_pointers.Pointer]
     """A ordered set of currently compiling computeds"""
 
+    allow_endpoint_linkprops: bool
+    """Whether to allow references to endpoint linkpoints (@source, @target)."""
+
     disallow_dml: Optional[str]
     """Whether we are currently in a place where no dml is allowed,
         if not None, then it is of the form `in a FILTER clause`  """
@@ -565,6 +569,16 @@ class ContextLevel(compiler.ContextLevel):
 
     active_defaults: FrozenSet[s_objtypes.ObjectType]
     """For detecting cycles in defaults"""
+
+    collection_cast_info: Optional[CollectionCastInfo]
+    """For generating errors messages when casting to collections.
+
+    This will be set by the outermost cast and then shared between all
+    sub-casts.
+
+    Some casts (eg. arrays) will generate select statements containing other
+    type casts. These will also share the outermost cast info.
+    """
 
     def __init__(
         self,
@@ -623,7 +637,10 @@ class ContextLevel(compiler.ContextLevel):
             self.active_rewrites = frozenset()
             self.active_defaults = frozenset()
 
+            self.allow_endpoint_linkprops = False
             self.disallow_dml = None
+
+            self.collection_cast_info = None
 
         else:
             self.env = prevlevel.env
@@ -666,7 +683,10 @@ class ContextLevel(compiler.ContextLevel):
             self.active_rewrites = prevlevel.active_rewrites
             self.active_defaults = prevlevel.active_defaults
 
+            self.allow_endpoint_linkprops = prevlevel.allow_endpoint_linkprops
             self.disallow_dml = prevlevel.disallow_dml
+
+            self.collection_cast_info = prevlevel.collection_cast_info
 
             if mode == ContextSwitchMode.SUBQUERY:
                 self.anchors = prevlevel.anchors.copy()
@@ -786,3 +806,23 @@ class ContextLevel(compiler.ContextLevel):
 class CompilerContext(compiler.CompilerContext[ContextLevel]):
     ContextLevelClass = ContextLevel
     default_mode = ContextSwitchMode.NEW
+
+
+class CollectionCastInfo(NamedTuple):
+    """For generating errors messages when casting to collections."""
+
+    from_type: s_types.Type
+    to_type: s_types.Type
+
+    path_elements: list[Tuple[str, Optional[str]]]
+    """Represents a path to the current collection element being cast.
+
+    A path element is a tuple of the collection type and an optional
+    element name. eg. ('tuple', 'a') or ('array', None)
+
+    The list is shared between the outermost context and all its sub contexts.
+    When casting a collection, each element's path should be pushed before
+    entering the "sub-cast" and popped immediately after.
+
+    In the event of a cast error, the list is preserved at the outermost cast.
+    """
