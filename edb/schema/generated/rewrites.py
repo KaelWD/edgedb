@@ -20,19 +20,19 @@ class RewriteMixin:
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.RewriteKind':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'kind'
+            self, schema, 'kind'    # type: ignore
         )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_subject(
         self, schema: 's_schema.Schema'
     ) -> 'objects.InheritingObject':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subject'
+            self, schema, 'subject'    # type: ignore
         )

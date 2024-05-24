@@ -19,5 +19,5 @@ class SourceMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectIndexByUnqualifiedName[pointers.Pointer]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'pointers'
+            self, schema, 'pointers'    # type: ignore
         )

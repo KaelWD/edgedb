@@ -19,21 +19,21 @@ class AnnotationValueMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.Object':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subject'
+            self, schema, 'subject'    # type: ignore
         )
 
     def get_annotation(
         self, schema: 's_schema.Schema'
     ) -> 'annos.Annotation':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'annotation'
+            self, schema, 'annotation'    # type: ignore
         )
 
     def get_value(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'value'
+            self, schema, 'value'    # type: ignore
         )
 
 
@@ -43,7 +43,7 @@ class AnnotationSubjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectIndexByShortname[annos.AnnotationValue]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'annotations'
+            self, schema, 'annotations'    # type: ignore
         )
 
 
@@ -53,5 +53,5 @@ class AnnotationMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'inheritable'
+            self, schema, 'inheritable'    # type: ignore
         )

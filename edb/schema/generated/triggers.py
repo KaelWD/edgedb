@@ -20,47 +20,47 @@ class TriggerMixin:
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.TriggerTiming':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'timing'
+            self, schema, 'timing'    # type: ignore
         )
 
     def get_kinds(
         self, schema: 's_schema.Schema'
     ) -> 'objects.MultiPropSet[qltypes.TriggerKind]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'kinds'
+            self, schema, 'kinds'    # type: ignore
         )
 
     def get_scope(
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.TriggerScope':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'scope'
+            self, schema, 'scope'    # type: ignore
         )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_condition(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'condition'
+            self, schema, 'condition'    # type: ignore
         )
 
     def get_subject(
         self, schema: 's_schema.Schema'
     ) -> 'objects.InheritingObject':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subject'
+            self, schema, 'subject'    # type: ignore
         )
 
     def get_owned(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'owned'
+            self, schema, 'owned'    # type: ignore
         )

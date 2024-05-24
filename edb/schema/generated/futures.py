@@ -18,5 +18,5 @@ class FutureBehaviorMixin:
         self, schema: 's_schema.Schema'
     ) -> 'name.Name':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'name'
+            self, schema, 'name'    # type: ignore
         )

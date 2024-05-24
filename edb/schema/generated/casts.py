@@ -19,61 +19,61 @@ class CastMixin:
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_type'
+            self, schema, 'from_type'    # type: ignore
         )
 
     def get_to_type(
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'to_type'
+            self, schema, 'to_type'    # type: ignore
         )
 
     def get_allow_implicit(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'allow_implicit'
+            self, schema, 'allow_implicit'    # type: ignore
         )
 
     def get_allow_assignment(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'allow_assignment'
+            self, schema, 'allow_assignment'    # type: ignore
         )
 
     def get_language(
         self, schema: 's_schema.Schema'
     ) -> 'ast.Language':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'language'
+            self, schema, 'language'    # type: ignore
         )
 
     def get_from_function(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_function'
+            self, schema, 'from_function'    # type: ignore
         )
 
     def get_from_expr(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_expr'
+            self, schema, 'from_expr'    # type: ignore
         )
 
     def get_from_cast(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_cast'
+            self, schema, 'from_cast'    # type: ignore
         )
 
     def get_code(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'code'
+            self, schema, 'code'    # type: ignore
         )

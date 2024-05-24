@@ -21,56 +21,56 @@ class TypeMixin:
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_expr_type(
         self, schema: 's_schema.Schema'
     ) -> 'types.ExprType':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr_type'
+            self, schema, 'expr_type'    # type: ignore
         )
 
     def get_from_alias(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_alias'
+            self, schema, 'from_alias'    # type: ignore
         )
 
     def get_from_global(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_global'
+            self, schema, 'from_global'    # type: ignore
         )
 
     def get_alias_is_persistent(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'alias_is_persistent'
+            self, schema, 'alias_is_persistent'    # type: ignore
         )
 
     def get_rptr(
         self, schema: 's_schema.Schema'
     ) -> 'objects.Object':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'rptr'
+            self, schema, 'rptr'    # type: ignore
         )
 
     def get_backend_id(
         self, schema: 's_schema.Schema'
     ) -> 'int':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'backend_id'
+            self, schema, 'backend_id'    # type: ignore
         )
 
     def get_transient(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'transient'
+            self, schema, 'transient'    # type: ignore
         )
 
 
@@ -88,7 +88,7 @@ class CollectionMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'is_persistent'
+            self, schema, 'is_persistent'    # type: ignore
         )
 
 
@@ -102,14 +102,14 @@ class ArrayMixin:
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'element_type'
+            self, schema, 'element_type'    # type: ignore
         )
 
     def get_dimensions(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedList[int]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'dimensions'
+            self, schema, 'dimensions'    # type: ignore
         )
 
 
@@ -123,14 +123,14 @@ class TupleMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'named'
+            self, schema, 'named'    # type: ignore
         )
 
     def get_element_types(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectDict[str, types.Type]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'element_types'
+            self, schema, 'element_types'    # type: ignore
         )
 
 
@@ -144,7 +144,7 @@ class RangeMixin:
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'element_type'
+            self, schema, 'element_type'    # type: ignore
         )
 
 
@@ -158,7 +158,7 @@ class MultiRangeMixin:
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'element_type'
+            self, schema, 'element_type'    # type: ignore
         )
 
 

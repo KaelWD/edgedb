@@ -23,70 +23,70 @@ class IndexMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[indexes.Index]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'bases'
+            self, schema, 'bases'    # type: ignore
         )
 
     def get_subject(
         self, schema: 's_schema.Schema'
     ) -> 'objects.Object':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subject'
+            self, schema, 'subject'    # type: ignore
         )
 
     def get_params(
         self, schema: 's_schema.Schema'
-    ) -> 'objects.ObjectList[functions.Parameter]':
+    ) -> 'functions.FuncParameterList':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'params'
+            self, schema, 'params'    # type: ignore
         )
 
     def get_code(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'code'
+            self, schema, 'code'    # type: ignore
         )
 
     def get_kwargs(
         self, schema: 's_schema.Schema'
     ) -> 'checked.CheckedDict[str, expr.Expression]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'kwargs'
+            self, schema, 'kwargs'    # type: ignore
         )
 
     def get_type_args(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[objects.Object]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'type_args'
+            self, schema, 'type_args'    # type: ignore
         )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_except_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'except_expr'
+            self, schema, 'except_expr'    # type: ignore
         )
 
     def get_deferrability(
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.IndexDeferrability':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'deferrability'
+            self, schema, 'deferrability'    # type: ignore
         )
 
     def get_deferred(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'deferred'
+            self, schema, 'deferred'    # type: ignore
         )
 
 
@@ -96,5 +96,5 @@ class IndexableSubjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectIndexByFullname[indexes.Index]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'indexes'
+            self, schema, 'indexes'    # type: ignore
         )

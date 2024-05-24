@@ -23,117 +23,117 @@ class PointerMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.InheritingObject':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'source'
+            self, schema, 'source'    # type: ignore
         )
 
     def get_target(
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'target'
+            self, schema, 'target'    # type: ignore
         )
 
     def get_required(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'required'
+            self, schema, 'required'    # type: ignore
         )
 
     def get_readonly(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'readonly'
+            self, schema, 'readonly'    # type: ignore
         )
 
     def get_secret(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'secret'
+            self, schema, 'secret'    # type: ignore
         )
 
     def get_protected(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'protected'
+            self, schema, 'protected'    # type: ignore
         )
 
     def get_computable(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'computable'
+            self, schema, 'computable'    # type: ignore
         )
 
     def get_from_alias(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'from_alias'
+            self, schema, 'from_alias'    # type: ignore
         )
 
     def get_defined_here(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'defined_here'
+            self, schema, 'defined_here'    # type: ignore
         )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_default(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'default'
+            self, schema, 'default'    # type: ignore
         )
 
     def get_cardinality(
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.SchemaCardinality':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'cardinality'
+            self, schema, 'cardinality'    # type: ignore
         )
 
     def get_union_of(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectSet[pointers.Pointer]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'union_of'
+            self, schema, 'union_of'    # type: ignore
         )
 
     def get_intersection_of(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectSet[pointers.Pointer]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'intersection_of'
+            self, schema, 'intersection_of'    # type: ignore
         )
 
     def get_computed_link_alias_is_backward(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'computed_link_alias_is_backward'
+            self, schema, 'computed_link_alias_is_backward'    # type: ignore
         )
 
     def get_computed_link_alias(
         self, schema: 's_schema.Schema'
     ) -> 'objects.Object':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'computed_link_alias'
+            self, schema, 'computed_link_alias'    # type: ignore
         )
 
     def get_rewrites(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectIndexByUnqualifiedName[rewrites.Rewrite]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'rewrites'
+            self, schema, 'rewrites'    # type: ignore
         )

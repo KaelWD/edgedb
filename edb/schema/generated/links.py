@@ -18,12 +18,12 @@ class LinkMixin:
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.LinkTargetDeleteAction':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'on_target_delete'
+            self, schema, 'on_target_delete'    # type: ignore
         )
 
     def get_on_source_delete(
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.LinkSourceDeleteAction':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'on_source_delete'
+            self, schema, 'on_source_delete'    # type: ignore
         )

@@ -10,7 +10,6 @@ if TYPE_CHECKING:
     from edb.schema import schema as s_schema
 from edb.schema import orm as s_orm
 from edb.schema import objects
-from edb.common import checked
 from edb.schema import expr
 from edb.schema import constraints
 from edb.schema import functions
@@ -20,72 +19,72 @@ class ConstraintMixin:
 
     def get_params(
         self, schema: 's_schema.Schema'
-    ) -> 'objects.ObjectList[functions.Parameter]':
+    ) -> 'functions.FuncParameterList':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'params'
+            self, schema, 'params'    # type: ignore
         )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_subjectexpr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subjectexpr'
+            self, schema, 'subjectexpr'    # type: ignore
         )
 
     def get_finalexpr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'finalexpr'
+            self, schema, 'finalexpr'    # type: ignore
         )
 
     def get_except_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'except_expr'
+            self, schema, 'except_expr'    # type: ignore
         )
 
     def get_subject(
         self, schema: 's_schema.Schema'
     ) -> 'objects.Object':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subject'
+            self, schema, 'subject'    # type: ignore
         )
 
     def get_args(
         self, schema: 's_schema.Schema'
-    ) -> 'checked.FrozenCheckedList[expr.Expression]':
+    ) -> 'expr.ExpressionList':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'args'
+            self, schema, 'args'    # type: ignore
         )
 
     def get_delegated(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'delegated'
+            self, schema, 'delegated'    # type: ignore
         )
 
     def get_errmessage(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'errmessage'
+            self, schema, 'errmessage'    # type: ignore
         )
 
     def get_is_aggregate(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'is_aggregate'
+            self, schema, 'is_aggregate'    # type: ignore
         )
 
 
@@ -95,5 +94,5 @@ class ConsistencySubjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'constraints.ObjectIndexByConstraintName[constraints.Constraint]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'constraints'
+            self, schema, 'constraints'    # type: ignore
         )

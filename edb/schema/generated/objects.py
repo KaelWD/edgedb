@@ -22,42 +22,42 @@ class ObjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'uuid.UUID':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'id'
+            self, schema, 'id'    # type: ignore
         )
 
     def get_internal(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'internal'
+            self, schema, 'internal'    # type: ignore
         )
 
     def get_sourcectx(
         self, schema: 's_schema.Schema'
     ) -> 'span.Span':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'sourcectx'
+            self, schema, 'sourcectx'    # type: ignore
         )
 
     def get_name(
         self, schema: 's_schema.Schema'
     ) -> 'name.Name':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'name'
+            self, schema, 'name'    # type: ignore
         )
 
     def get_builtin(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'builtin'
+            self, schema, 'builtin'    # type: ignore
         )
 
     def get_computed_fields(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedSet[str]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'computed_fields'
+            self, schema, 'computed_fields'    # type: ignore
         )
 
 
@@ -71,7 +71,7 @@ class QualifiedObjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'name.QualName':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'name'
+            self, schema, 'name'    # type: ignore
         )
 
 
@@ -97,7 +97,7 @@ class SubclassableObjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'abstract'
+            self, schema, 'abstract'    # type: ignore
         )
 
 
@@ -107,28 +107,28 @@ class InheritingObjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[objects.InheritingObject]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'bases'
+            self, schema, 'bases'    # type: ignore
         )
 
     def get_ancestors(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[objects.InheritingObject]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'ancestors'
+            self, schema, 'ancestors'    # type: ignore
         )
 
     def get_inherited_fields(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedSet[str]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'inherited_fields'
+            self, schema, 'inherited_fields'    # type: ignore
         )
 
     def get_is_derived(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'is_derived'
+            self, schema, 'is_derived'    # type: ignore
         )
 
 

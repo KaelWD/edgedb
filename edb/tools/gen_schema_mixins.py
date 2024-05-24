@@ -84,7 +84,7 @@ def gen_for_module(mod_name: str, mod: types.ModuleType):
                 f'        self, schema: \'s_schema.Schema\'\n'
                 f'    ) -> \'{ty}\':\n'
                 f'        return s_orm.get_field_value(  # type: ignore\n'
-                f'            self, schema, \'{fn}\'\n'
+                f'            self, schema, \'{fn}\'    # type: ignore\n'
                 f'        )\n'
             )
         if len(my_fields) == 0:
@@ -103,7 +103,7 @@ def collect_imports(ty: type, current_module: str) -> typing.Set[str]:
 
     if ty.__module__ == 'builtins':
         return r
-    if typing_inspect.is_generic_type(ty):
+    if is_generic(ty):
         r.add(ty.__base__.__module__)
         for arg in ty.orig_args:
             r.update(collect_imports(arg, current_module))
@@ -123,7 +123,7 @@ def codegen_ty(ty: type, current_module: str):
     if ty.__module__ == 'builtins':
         return ty.__qualname__
 
-    if typing_inspect.is_generic_type(ty):
+    if is_generic(ty):
         mod_name = ty.__base__.__module__.split('.')[-1]
         base_name = ty.__base__.__qualname__
         base_name = base_name.split('[')[0]
@@ -137,3 +137,10 @@ def codegen_ty(ty: type, current_module: str):
     # base case
     mod_name = ty.__module__.split('.')[-1]
     return f"{mod_name}.{ty.__qualname__}"
+
+
+def is_generic(ty: type) -> bool:
+    return (
+        ty.__name__ not in {'FuncParameterList', 'ExpressionList'}
+        and typing_inspect.is_generic_type(ty)
+    )

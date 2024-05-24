@@ -19,26 +19,26 @@ class MigrationMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[migrations.Migration]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'parents'
+            self, schema, 'parents'    # type: ignore
         )
 
     def get_message(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'message'
+            self, schema, 'message'    # type: ignore
         )
 
     def get_generated_by(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'generated_by'
+            self, schema, 'generated_by'    # type: ignore
         )
 
     def get_script(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'script'
+            self, schema, 'script'    # type: ignore
         )

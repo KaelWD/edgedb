@@ -18,7 +18,7 @@ class BaseSchemaVersionMixin:
         self, schema: 's_schema.Schema'
     ) -> 'uuid.UUID':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'version'
+            self, schema, 'version'    # type: ignore
         )
 
 

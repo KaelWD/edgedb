@@ -21,35 +21,35 @@ class ExtensionPackageMixin:
         self, schema: 's_schema.Schema'
     ) -> 'verutils.Version':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'version'
+            self, schema, 'version'    # type: ignore
         )
 
     def get_script(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'script'
+            self, schema, 'script'    # type: ignore
         )
 
     def get_sql_extensions(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedSet[str]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'sql_extensions'
+            self, schema, 'sql_extensions'    # type: ignore
         )
 
     def get_ext_module(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'ext_module'
+            self, schema, 'ext_module'    # type: ignore
         )
 
     def get_dependencies(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedSet[str]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'dependencies'
+            self, schema, 'dependencies'    # type: ignore
         )
 
 
@@ -59,12 +59,12 @@ class ExtensionMixin:
         self, schema: 's_schema.Schema'
     ) -> 'extensions.ExtensionPackage':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'package'
+            self, schema, 'package'    # type: ignore
         )
 
     def get_dependencies(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectList[extensions.Extension]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'dependencies'
+            self, schema, 'dependencies'    # type: ignore
         )

@@ -19,40 +19,40 @@ class ScalarTypeMixin:
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'default'
+            self, schema, 'default'    # type: ignore
         )
 
     def get_enum_values(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedList[str]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'enum_values'
+            self, schema, 'enum_values'    # type: ignore
         )
 
     def get_sql_type(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'sql_type'
+            self, schema, 'sql_type'    # type: ignore
         )
 
     def get_sql_type_scheme(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'sql_type_scheme'
+            self, schema, 'sql_type_scheme'    # type: ignore
         )
 
     def get_num_params(
         self, schema: 's_schema.Schema'
     ) -> 'int':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'num_params'
+            self, schema, 'num_params'    # type: ignore
         )
 
     def get_arg_values(
         self, schema: 's_schema.Schema'
     ) -> 'checked.FrozenCheckedList[str]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'arg_values'
+            self, schema, 'arg_values'    # type: ignore
         )

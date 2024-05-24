@@ -7,7 +7,8 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    pass
+    from edb.schema import schema as s_schema
+from edb.schema import orm as s_orm
 
 
 class PseudoTypeMixin:

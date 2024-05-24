@@ -17,19 +17,19 @@ class RoleMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'superuser'
+            self, schema, 'superuser'    # type: ignore
         )
 
     def get_password(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'password'
+            self, schema, 'password'    # type: ignore
         )
 
     def get_password_hash(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'password_hash'
+            self, schema, 'password_hash'    # type: ignore
         )

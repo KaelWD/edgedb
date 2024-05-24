@@ -21,14 +21,14 @@ class ObjectTypeRefMixinMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectIndexByUnqualifiedName[policies.AccessPolicy]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'access_policies'
+            self, schema, 'access_policies'    # type: ignore
         )
 
     def get_triggers(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectIndexByUnqualifiedName[triggers.Trigger]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'triggers'
+            self, schema, 'triggers'    # type: ignore
         )
 
 
@@ -38,19 +38,19 @@ class ObjectTypeMixin:
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectSet[objtypes.ObjectType]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'union_of'
+            self, schema, 'union_of'    # type: ignore
         )
 
     def get_intersection_of(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectSet[objtypes.ObjectType]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'intersection_of'
+            self, schema, 'intersection_of'    # type: ignore
         )
 
     def get_is_opaque_union(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'is_opaque_union'
+            self, schema, 'is_opaque_union'    # type: ignore
         )

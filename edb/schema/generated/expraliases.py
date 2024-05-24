@@ -20,19 +20,19 @@ class AliasMixin:
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_type(
         self, schema: 's_schema.Schema'
     ) -> 'types.Type':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'type'
+            self, schema, 'type'    # type: ignore
         )
 
     def get_created_types(
         self, schema: 's_schema.Schema'
     ) -> 'objects.ObjectSet[types.Type]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'created_types'
+            self, schema, 'created_types'    # type: ignore
         )

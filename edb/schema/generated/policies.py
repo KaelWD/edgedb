@@ -20,47 +20,47 @@ class AccessPolicyMixin:
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'condition'
+            self, schema, 'condition'    # type: ignore
         )
 
     def get_expr(
         self, schema: 's_schema.Schema'
     ) -> 'expr.Expression':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'expr'
+            self, schema, 'expr'    # type: ignore
         )
 
     def get_action(
         self, schema: 's_schema.Schema'
     ) -> 'qltypes.AccessPolicyAction':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'action'
+            self, schema, 'action'    # type: ignore
         )
 
     def get_access_kinds(
         self, schema: 's_schema.Schema'
     ) -> 'objects.MultiPropSet[qltypes.AccessKind]':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'access_kinds'
+            self, schema, 'access_kinds'    # type: ignore
         )
 
     def get_subject(
         self, schema: 's_schema.Schema'
     ) -> 'objects.InheritingObject':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'subject'
+            self, schema, 'subject'    # type: ignore
         )
 
     def get_errmessage(
         self, schema: 's_schema.Schema'
     ) -> 'str':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'errmessage'
+            self, schema, 'errmessage'    # type: ignore
         )
 
     def get_owned(
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'owned'
+            self, schema, 'owned'    # type: ignore
         )

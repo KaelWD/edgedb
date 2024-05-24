@@ -17,7 +17,7 @@ class ReferencedObjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'owned'
+            self, schema, 'owned'    # type: ignore
         )
 
 
@@ -27,7 +27,7 @@ class ReferencedInheritingObjectMixin:
         self, schema: 's_schema.Schema'
     ) -> 'bool':
         return s_orm.get_field_value(  # type: ignore
-            self, schema, 'declared_overloaded'
+            self, schema, 'declared_overloaded'    # type: ignore
         )
 
 
